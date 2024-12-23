@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ورود یا ایجاد حساب</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">ایجاد حساب</label>
+					<input id="signusername" type="text" name="txt" placeholder="نام‌کاربری" required="">
+					<input id="signemail" type="email" name="email" placeholder="ایمیل" required="">
+					<input id="signpass" type="password" name="pswd" placeholder="رمز‌عبور" required="">
+					<button type="submit">ثبت‌نام</button>
+				</form>
+				<div id="signupmessage" class="message"></div>
+			</div>
+
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">ورود</label>
+					<input id="username" type="text" name="username" placeholder="نام‌کاربری" required="">
+					<input id="pass" type="password" name="password" placeholder="رمزعبور" required="">
+					<button type="submit">ورود به حساب</button>
+				</form>
+			</div>
+	</div>
+	<script src="../script.js"></script>
+</body>
+</html>

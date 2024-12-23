@@ -1,0 +1,32 @@
+[
+  {
+    "email": "hackedbykornik@gmail.com",
+    "username": "kornik",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "email": "mosmosak@gmail.com",
+    "username": "mostafa21",
+    "password": "mosi2020",
+    "role": "writer"
+  },
+  {
+    "email": "mahsa.sabouri@gmail.com",
+    "username": "mahsa2002",
+    "password": "mahsasabouri1111",
+    "role": "user"
+  },
+  {
+    "email": "hetsoyam@gmail.com",
+    "username": "hetsoyam",
+    "password": "hesampofiyouz10",
+    "role": "user"
+  },
+  {
+    "email": "fatimati@gmail.com",
+    "username": "fatikomando",
+    "password": "bademJOON",
+    "role": "user"
+  }
+]
