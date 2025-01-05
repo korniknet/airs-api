@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const User = require('./model/models');
+const { dbTest } = require('./controller/dbTest');
+const db = require('./controller/dbSync')
 
 const PORT = 3000;
 
@@ -17,70 +20,101 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'index.html'));
 });
 
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-        return res.status(400).json({ message: "Username and Password are required." });
+app.post('/users', (req, res) => {
+
+    console.log(req.body);
+    let {
+        birthdate,
+        Username,
+        fullName,
+        email,
+        phonenumber,
+        radio,
+        job,
+        grade,
+        averageScore,
+        selectBranch,
+        otherBranch,
+        highSchBranch,
+        password
+    } = req.body;
+    if (radio === 'no') { job = null };
+    const userObj = { birthdate, Username, fullName, email, phonenumber, radio, job, grade, averageScore, selectBranch, otherBranch, highSchBranch, password, role: 'user' };
+
+    try {
+        db.pushUser(userObj);
+        return res.status(200).json({ message: "User created..." });
+    } catch (err) {
+        console.error(`Got some error : ${err}`);
+        return res.status(500).json({ message: "Internal Server Error!" });
     }
 
-    // read database and store it to a variable
-    fs.readFile('./users.json', (err, data) => {
-        if (err) {
-            console.error(`Error in reading database: ${err}`);
-            setTimeout(() => {
-                return res.status(500).json({ message: "Error to connect to database" });
-            }, 4000);
-        }
+    // const { username, password } = req.body;
+    // if (!username || !password) {
+    //     return res.status(400).json({ message: "Username and Password are required." });
+    // }
 
-        const users = JSON.parse(data);
-        let user = users.find(u => u.username === username && u.password === password);
-        console.log(user);
+    // // read database and store it to a variable
+    // fs.readFile('./users.json', (err, data) => {
+    //     if (err) {
+    //         console.error(`Error in reading database: ${err}`);
+    //         setTimeout(() => {
+    //             return res.status(500).json({ message: "Error to connect to database" });
+    //         }, 4000);
+    //     }
 
-        if (!user) {
-            return res.status(401).json({ message: "Incorrect username or password" });
-        }
+    //     const users = JSON.parse(data);
+    //     let user = users.find(u => u.username === username && u.password === password);
+    //     console.log(user);
 
-        return res.status(200).json({ message: `Login Successful! role : ${user.role}` });
-    });
+    //     if (!user) {
+    //         return res.status(401).json({ message: "Incorrect username or password" });
+    //     }
+
+    //     return res.status(200).json({ message: `Login Successful! role : ${user.role}` });
+    // });
 
 });
 
-app.post('/signup', (req, res) => {
-    const { email, username, password } = req.body;
-    if (!email || !username || !password) {
-        return res.status(400).json({ message: "all fields are required." });
-    }
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    console.log(req.body);
 
-    fs.readFile('./users.json', (err, data) => {
-        if (err) {
-            console.error(`Error to read Database : ${err}`);
-            return res.status(500).json({ message: "Internal Server Error" })
-        }
 
-        const users = JSON.parse(data);
-        const isExist = users.find(u => u.email === email);
-        if (isExist) {
-            return res.status(400).json({ message: "Email is existing!" });
-        }
+    // if (!email || !username || !password) {
+    //     return res.status(400).json({ message: "all fields are required." });
+    // }
 
-        const newUser = {
-            email: email,
-            username: username,
-            password: password,
-            role: "user"
-        }
+    // fs.readFile('./users.json', (err, data) => {
+    //     if (err) {
+    //         console.error(`Error to read Database : ${err}`);
+    //         return res.status(500).json({ message: "Internal Server Error" })
+    //     }
 
-        users.push(newUser);
+    //     const users = JSON.parse(data);
+    //     const isExist = users.find(u => u.email === email);
+    //     if (isExist) {
+    //         return res.status(400).json({ message: "Email is existing!" });
+    //     }
 
-        fs.writeFile('./users.json', JSON.stringify(users, null, 2), (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "Internal Server Error" });
-            }
+    //     const newUser = {
+    //         email: email,
+    //         username: username,
+    //         password: password,
+    //         role: "user"
+    //     }
 
-            return res.status(200).json({ message: "User Registered!" });
-        })
-    })
+    //     users.push(newUser);
+
+    //     fs.writeFile('./users.json', JSON.stringify(users, null, 2), (err) => {
+    //         if (err) {
+    //             console.error(err);
+    //             return res.status(500).json({ message: "Internal Server Error" });
+    //         }
+
+    //         return res.status(200).json({ message: "User Registered!" });
+    //     })
+    // })
 
 })
 
