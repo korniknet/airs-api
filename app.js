@@ -8,10 +8,12 @@ const User = require('./model/models');
 const { dbTest } = require('./controller/dbTest');
 const db = require('./controller/dbSync');
 const bcrypt = require('bcrypt');
-const Router = express.Router();
-const { login } = require('./controller/loginController');
+const crypto = require('crypto')
+const seq = require('./controller/dbConfig');
+// const { login } = require('./controller/loginController');
 
 // const session = require('express-session');
+// const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const PORT = 3000;
 
@@ -21,13 +23,12 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'view')))
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'view', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'view', 'index.html'));
+// });
 
 app.post('/api/auth/register', (req, res) => {
-
-    console.log(req.body);
+    // console.log(req.body);
     let {
         birthdate,
         Username,
@@ -82,8 +83,9 @@ app.post('/api/auth/register', (req, res) => {
 });
 
 app.post('/api/auth/login', async (req, res) => {
-
     try {
+        const userSecret = crypto.randomBytes(32).toString('hex');
+        await User.update({ secret: userSecret }, { where: { username: req.body.username } });
         const { username, password } = req.body;
 
         const user = await User.findOne({ where: { username } });
