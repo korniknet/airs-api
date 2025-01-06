@@ -11,7 +11,8 @@ module.exports.pushUser = async (userObject) => {
             job: userObject.job,
             grade: userObject.grade,
             averageScore: userObject.averageScore,
-            branch: userObject.selectBranch,
+            selectbar: userObject.selectbar,
+            branch: userObject.branch,
             highSchBranch: userObject.highSchBranch,
             password: userObject.password,
         });

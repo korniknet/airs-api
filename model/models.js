@@ -41,9 +41,13 @@ const User = seq.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    branch: {
+    selectbar: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    branch: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     averageScore: {
         type: DataTypes.FLOAT,
