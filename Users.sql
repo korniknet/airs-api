@@ -12,17 +12,20 @@ CREATE TABLE [dbo].[Users](
 	[homeTown] [nvarchar](255) NULL,
 	[job] [nvarchar](255) NULL,
 	[grade] [nvarchar](255) NOT NULL,
-	[branch] [nvarchar](255) NOT NULL,
+	[selectbar] [nvarchar](255) NOT NULL,
 	[averageScore] [float] NULL,
 	[highSchBranch] [nvarchar](255) NOT NULL,
 	[role] [varchar](255) NULL,
-	[password] [nvarchar](255) NOT NULL
+	[password] [nvarchar](255) NOT NULL,
+	[branch] [nvarchar](1) NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Users] ADD PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD CHECK  (([role]=N'admin' OR [role]=N'author' OR [role]=N'user'))
 GO
 ALTER TABLE [dbo].[Users]  WITH CHECK ADD CHECK  (([role]=N'admin' OR [role]=N'author' OR [role]=N'user'))
 GO
